@@ -26,29 +26,69 @@ The platform supports learners, tutors and administrators, with features includi
 | AI Integration | Google Gemini API |
 | Deployment | Google Cloud Compute Engine |
 
-## Screenshots and Demo
+## Screenshots 
 
-### Demo Video
+### Authentication
 
-A short walkthrough of the application's main features will be added here.
+Users can create an account as a learner or tutor and log in to access their respective features.
 
-### Screenshots
+**Login**
 
-Screenshots of the following pages will be added:
+![Login Page](screenshots/login.png)
 
-- Login and registration
-- Learner dashboard and tutor search
-- Tutor profiles and availability
-- Session booking and management
-- AI-generated session recap
+**Registration**
+
+![Registration Page](screenshots/register.png)
+
+### Learner Experience
+
+Learners can search for tutors, filter by subject, price, rating and availability, manage their bookings and leave reviews after completed sessions.
+
+**Learner Dashboard**
+
+![Learner Dashboard](screenshots/learner-dashboard.png)
+
+**Find a Tutor**
+
+![Tutor Search Filters](screenshots/tutor-search-1.png)
+
+![Tutor Search Results](screenshots/tutor-search-2.png)
+
+**Manage Bookings & Reviews**
+
+![Completed Bookings and Reviews](screenshots/booking-1.png)
+
+![Booking Statuses](screenshots/booking-2.png)
+
+### Tutor Experience
+
+Tutors can manage their profiles, select subjects to teach, set hourly rates, publish availability slots and track their tutoring sessions.
+
+**Tutor Dashboard**
+
+![Tutor Dashboard](screenshots/tutor-dashboard.png)
+
+**Tutor Profile**
+
+![Tutor Profile](screenshots/tutor-profile.png)
+
+**Availability Management**
+
+![Tutor Availability Slots](screenshots/slots.png)
+
+### AI Session Recap
+
+Tutors can enter notes after a completed session and use Gemini AI to generate a session recap.
+
+![AI Session Recap Feature](screenshots/tutor-session.png)
 
 ## Project Structure
 
 ```text
 FIT2095-studybridge/
-├── 35623608-studybridge-api/       # Backend
-├── 35623608-studybridge-client/    # Frontend
-└── README.md                       # Project documentation
+├── backend      
+├── frontend    
+└── README.md                       
 ```
 
 ## Getting Started
@@ -141,7 +181,7 @@ npm install
 **b) Run Angular**
 
 ```bash
-ng serve
+npm start
 ```
 
 **c) Open StudyBridge**
