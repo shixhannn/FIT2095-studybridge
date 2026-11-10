@@ -1,0 +1,214 @@
+
+<div class="tutor-detail-page">
+  <div class="tutor-detail-container">
+
+    <a routerLink="/tutors" class="back-link">
+      ← Back to Tutor Search
+    </a>
+
+    <div class="detail-banner">
+      <h1>Tutor Details</h1>
+      <p>Learn more about your tutor and book an available session.</p>
+    </div>
+
+    @if (tutor(); as tutor) {
+
+      <!-- Tutor information -->
+      <section class="detail-card">
+        <div class="tutor-heading">
+          <div>
+            <h2>{{ tutor.fullName }}</h2>
+            <p class="tutor-bio">{{ tutor.bio }}</p>
+          </div>
+
+          <div class="rate-display">
+            <span class="rate-amount">${{ tutor.hourlyRate }}</span>
+            <span class="rate-label">per hour</span>
+          </div>
+        </div>
+
+        <div class="tutor-meta">
+          <div class="meta-group">
+            <span class="meta-label">Subjects Taught</span>
+
+            <div class="subject-list">
+              @for (subject of tutor.subjects; track subject) {
+                <span class="subject-tag">{{ subject }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="meta-group">
+            <span class="meta-label">Tutor Rating</span>
+
+            @if (tutor.averageRating === null) {
+              <span class="rating-text">No ratings yet</span>
+            } @else {
+              <span class="rating-text">
+                <span class="rating-star">★</span>
+                {{ tutor.averageRating }} / 5
+              </span>
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Open slots -->
+      <section class="detail-section">
+        <h2>Open Slots</h2>
+
+        <div class="detail-card table-card">
+          <div class="table-responsive">
+            <table class="detail-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Start Time</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (slot of tutor.availableSlots; track slot._id) {
+                  <tr>
+                    <td>{{ slot.date | date:'dd MMM yyyy':'UTC' }}</td>
+                    <td>{{ slot.startTime }}</td>
+                    <td>{{ slot.durationMinutes }} min</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="3" class="empty-state">
+                      No available slots.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Booking form: learners only -->
+      @if (isLearner()) {
+        <section class="detail-section">
+          <div class="detail-card booking-card">
+            <h2>Book a Session</h2>
+
+            <p class="section-description">
+              Select an available time slot and the subject you'd like to learn.
+            </p>
+
+            <form [formGroup]="bookingForm" (ngSubmit)="onBook()">
+              <div class="booking-form-grid">
+
+                <div class="form-field">
+                  <label for="slotId">Time Slot</label>
+
+                  <select id="slotId" formControlName="slotId">
+                    <option value="">Select a time slot</option>
+
+                    @for (slot of tutor.availableSlots; track slot._id) {
+                      @if (!slot.isBooked) {
+                        <option [value]="slot._id">
+                          {{ slot.date | date:'dd MMM yyyy':'UTC' }}
+                          — {{ slot.startTime }}
+                          ({{ slot.durationMinutes }} minutes)
+                        </option>
+                      }
+                    }
+                  </select>
+
+                  @if (bookingForm.controls.slotId.invalid &&
+                       bookingForm.controls.slotId.touched) {
+                    <p class="field-error" role="alert">
+                      Please select a time slot.
+                    </p>
+                  }
+                </div>
+
+                <div class="form-field">
+                  <label for="subjectName">Subject</label>
+
+                  <select id="subjectName" formControlName="subjectName">
+                    <option value="">Select a subject</option>
+
+                    @for (subject of tutorSubjects(); track subject._id) {
+                      <option [value]="subject.name">
+                        {{ subject.name }}
+                      </option>
+                    }
+                  </select>
+
+                  @if (bookingForm.controls.subjectName.invalid &&
+                       bookingForm.controls.subjectName.touched) {
+                    <p class="field-error" role="alert">
+                      Please select a subject.
+                    </p>
+                  }
+                </div>
+
+              </div>
+
+              @if (bookingError()) {
+                <p class="form-error" role="alert">
+                  {{ bookingError() }}
+                </p>
+              }
+
+              <div class="booking-actions">
+                <button
+                  type="submit"
+                  class="btn-book"
+                  [disabled]="bookingLoading()">
+                  {{ bookingLoading() ? 'Booking...' : 'Book Session' }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+      }
+
+      <!-- Reviews -->
+      <section class="detail-section">
+        <h2>Reviews</h2>
+
+        <div class="detail-card table-card">
+          <div class="table-responsive">
+            <table class="detail-table">
+              <thead>
+                <tr>
+                  <th>Rating</th>
+                  <th>Comment</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (review of tutor.reviews; track $index) {
+                  <tr>
+                    <td class="review-rating">
+                      <span class="rating-star">★</span>
+                      {{ review.rating }} / 5
+                    </td>
+                    <td>{{ review.comment }}</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="2" class="empty-state">
+                      No reviews yet.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    } @else {
+      <div class="detail-card loading-card">
+        <p>Loading tutor details...</p>
+      </div>
+    }
+
+  </div>
+</div>

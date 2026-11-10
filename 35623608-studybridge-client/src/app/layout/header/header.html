@@ -1,0 +1,97 @@
+
+<header class="studybridge-header">
+  <nav class="container">
+
+    <div class="header-content">
+
+      <!-- T9: Logo -->
+      <a routerLink="/dashboard"
+         class="header-logo-link">
+        <img src="/logo-long.png"
+             alt="StudyBridge logo"
+             class="studybridge-logo">
+      </a>
+
+      <!-- T9: Navigation based on logged-in user role -->
+      @if (auth.currentUser(); as user) {
+
+        <div class="header-navigation">
+
+          <a routerLink="/dashboard"
+             routerLinkActive="active-link"
+             class="nav-link">
+            Dashboard
+          </a>
+
+          @switch (user.role) {
+
+            @case ('learner') {
+              <a routerLink="/tutors"
+                 routerLinkActive="active-link"
+                 class="nav-link">
+                Search Tutors
+              </a>
+
+              <a routerLink="/my-bookings"
+                 routerLinkActive="active-link"
+                 class="nav-link">
+                My Bookings
+              </a>
+            }
+
+            @case ('tutor') {
+              <a routerLink="/my-profile"
+                 routerLinkActive="active-link"
+                 class="nav-link">
+                My Profile
+              </a>
+
+              <a routerLink="/my-slots"
+                 routerLinkActive="active-link"
+                 class="nav-link">
+                Publish a Slot
+              </a>
+
+              <a routerLink="/my-sessions"
+                 routerLinkActive="active-link"
+                 class="nav-link">
+                My Sessions
+              </a>
+            }
+          }
+
+          <span class="header-user">
+            {{ user.fullName }}
+          </span>
+
+          <button type="button"
+                  class="logout-button"
+                  (click)="onLogout()">
+            Log out
+          </button>
+
+        </div>
+
+      } @else {
+
+        <!-- Navigation for users who are not logged in -->
+        <div class="header-navigation">
+
+          <a routerLink="/login"
+             routerLinkActive="active-link"
+             class="nav-link">
+            Log in
+          </a>
+
+          <a routerLink="/register"
+             routerLinkActive="active-link"
+             class="nav-link">
+            Register
+          </a>
+
+        </div>
+      }
+
+    </div>
+  </nav>
+</header>

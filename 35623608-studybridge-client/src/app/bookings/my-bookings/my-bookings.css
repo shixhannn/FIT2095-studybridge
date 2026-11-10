@@ -1,0 +1,254 @@
+
+/* Page */
+.bookings-page {
+  background: #faf9f6;
+  min-height: 100%;
+  padding: 36px 24px 60px;
+  font-family: Arial, sans-serif;
+  color: #292f3b;
+}
+
+.bookings-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Page banner */
+.bookings-banner {
+  background: #3d4d70;
+  color: #ffffff;
+  padding: 32px 40px;
+  border-radius: 8px;
+  margin-bottom: 28px;
+}
+
+.bookings-banner h1 {
+  font-family: Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.bookings-banner p {
+  color: #e8ebf3;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Booking grid */
+.bookings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+
+/* Booking card */
+.booking-card {
+  background: #ffffff;
+  border: 1px solid #e1e5ed;
+  border-radius: 8px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(30, 45, 75, 0.04);
+  min-width: 0;
+}
+
+.booking-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.booking-heading {
+  min-width: 0;
+}
+
+.booking-heading h2 {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #292f3b;
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
+}
+
+.tutor-name {
+  color: #68758a;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Status */
+.booking-status {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-requested {
+  background: #fff3dc;
+  color: #94620d;
+}
+
+.status-confirmed {
+  background: #e9effb;
+  color: #355c9b;
+}
+
+.status-completed {
+  background: #eaf4ee;
+  color: #28724e;
+}
+
+.status-cancelled {
+  background: #f9eaea;
+  color: #a43b35;
+}
+
+/* Booking details */
+.booking-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 13px 0;
+  border-bottom: 1px solid #edf0f3;
+  font-size: 15px;
+}
+
+.detail-row:first-child {
+  padding-top: 0;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  color: #68758a;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  color: #292f3b;
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+/* Cancel action */
+.booking-actions {
+  margin-top: 24px;
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  min-height: 42px;
+  background: #ffffff;
+  color: #b42318;
+  border: 1px solid #d6a4a0;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background: #fff1f0;
+}
+
+.btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Completed booking review */
+.booking-review-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e1e5ed;
+  min-width: 0;
+}
+
+/* Errors */
+.form-error {
+  background: #fff1f0;
+  color: #b42318;
+  border: 1px solid #f0cbc7;
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+/* Loading and empty states */
+.bookings-message {
+  grid-column: 1 / -1;
+  background: #ffffff;
+  border: 1px solid #e1e5ed;
+  border-radius: 8px;
+  padding: 40px 24px;
+  text-align: center;
+  color: #68758a;
+}
+
+.bookings-message h2 {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  color: #292f3b;
+  margin: 0 0 12px;
+}
+
+.bookings-message p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+  .bookings-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .bookings-page {
+    padding: 20px 14px 40px;
+  }
+
+  .bookings-banner {
+    padding: 26px 24px;
+  }
+
+  .booking-card {
+    padding: 22px 20px;
+  }
+
+  .booking-heading h2 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .booking-card-header {
+    flex-wrap: wrap;
+  }
+
+  .detail-row {
+    gap: 10px;
+    font-size: 14px;
+  }
+}

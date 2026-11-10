@@ -1,0 +1,36 @@
+
+<div class="tutor-card">
+  <div class="tutor-card-header">
+    <h3>{{ tutor().fullName }}</h3>
+
+    @if (tutor().averageRating === null) {
+      <span class="tutor-rating no-rating">No ratings yet</span>
+    } @else {
+      <span class="tutor-rating">
+        <span class="rating-star">★</span>
+        {{ tutor().averageRating }} / 5
+      </span>
+    }
+  </div>
+
+  <p class="tutor-bio">{{ tutor().bio }}</p>
+
+  <div class="tutor-card-subjects">
+    @for (subject of tutor().subjects; track subject) {
+      <span class="subject-tag">{{ subject }}</span>
+    }
+  </div>
+
+  <div class="tutor-card-footer">
+    <div class="tutor-price">
+      <strong>${{ tutor().hourlyRate }}</strong>
+      <span>/ hour</span>
+    </div>
+
+    <a
+      class="tutor-details-link"
+      [routerLink]="['/tutors', tutor().userId]">
+      View Details
+    </a>
+  </div>
+</div>

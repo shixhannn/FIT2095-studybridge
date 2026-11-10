@@ -1,0 +1,122 @@
+
+<div class="bookings-page">
+  <div class="bookings-container">
+
+    <!-- Page header -->
+    <div class="bookings-banner">
+      <h1>My Bookings</h1>
+      <p>View and manage your tutoring bookings.</p>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="form-error" role="alert">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (loading()) {
+      <div class="bookings-message">
+        <p>Loading bookings...</p>
+      </div>
+    } @else {
+
+      <div class="bookings-grid">
+        @for (booking of bookings(); track booking._id) {
+
+          <article class="booking-card">
+
+            <!-- Card heading -->
+            <div class="booking-card-header">
+              <div class="booking-heading">
+                <h2>
+                  {{ subjectNames()[booking.subjectId] || 'Subject' }}
+                </h2>
+                <p class="tutor-name">
+                  with {{ tutorNames()[booking.tutorId] || 'Tutor' }}
+                </p>
+              </div>
+
+              <span
+                class="booking-status"
+                [class.status-requested]="booking.status === 'requested'"
+                [class.status-confirmed]="booking.status === 'confirmed'"
+                [class.status-completed]="booking.status === 'completed'"
+                [class.status-cancelled]="booking.status === 'cancelled'">
+                {{ booking.status }}
+              </span>
+            </div>
+
+            <!-- Booking details -->
+            <div class="booking-details">
+
+              <div class="detail-row">
+                <span class="detail-label">Subject ID</span>
+                <span class="detail-value">
+                  {{ booking.subjectId }}
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">Tutor ID</span>
+                <span class="detail-value">
+                  {{ booking.tutorId }}
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">Hourly Rate</span>
+                <span class="detail-value">
+                  ${{ booking.agreedRate }}
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">Created On</span>
+                <span class="detail-value">
+                  {{ booking.createdDate | date:'mediumDate' }}
+                </span>
+              </div>
+
+            </div>
+
+            <!-- Cancel booking -->
+            @if (canCancel(booking)) {
+              <div class="booking-actions">
+                <button
+                  type="button"
+                  class="btn-cancel"
+                  [disabled]="currentId() !== null"
+                  (click)="cancelBooking(booking)">
+
+                  @if (currentId() === booking._id) {
+                    Cancelling...
+                  } @else {
+                    Cancel Booking
+                  }
+                </button>
+              </div>
+            }
+
+            <!-- T8: Review completed bookings -->
+            @if (booking.status === 'completed') {
+              <div class="booking-review-section">
+                <app-booking-review [bookingId]="booking._id" />
+              </div>
+            }
+
+          </article>
+
+        } @empty {
+          <div class="bookings-message">
+            <h2>No Bookings Yet</h2>
+            <p>
+              Your tutoring bookings will appear here once
+              you book a session with a tutor.
+            </p>
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+</div>

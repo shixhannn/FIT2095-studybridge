@@ -1,0 +1,116 @@
+
+<div class="tutor-search-page">
+  <div class="tutor-search-container">
+
+    <!-- Page header -->
+    <div class="search-banner">
+      <h1>Find a Tutor</h1>
+      <p>Find the right tutor to support your learning journey.</p>
+    </div>
+
+    <!-- Search filters -->
+    <section class="search-card">
+      <h2>Search Filters</h2>
+      <p class="section-description">
+        Narrow down tutors by subject, price, rating and availability.
+      </p>
+
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+
+        <div class="filter-grid">
+
+          <!-- Subject -->
+          <div class="form-field">
+            <label for="subject">Subject</label>
+            <select id="subject" formControlName="subject">
+              <option value="">All subjects</option>
+              @for (subject of subjects(); track subject._id) {
+                <option [value]="subject.name">
+                  {{ subject.name }}
+                </option>
+              }
+            </select>
+          </div>
+
+          <!-- Minimum price -->
+          <div class="form-field">
+            <label for="minPrice">Minimum Hourly Price</label>
+            <input
+              id="minPrice"
+              type="number"
+              min="0"
+              placeholder="Min. price"
+              formControlName="minPrice">
+          </div>
+
+          <!-- Maximum price -->
+          <div class="form-field">
+            <label for="maxPrice">Maximum Hourly Price</label>
+            <input
+              id="maxPrice"
+              type="number"
+              min="0"
+              placeholder="Max. price"
+              formControlName="maxPrice">
+          </div>
+
+          <!-- Minimum rating -->
+          <div class="form-field">
+            <label for="minRating">Minimum Rating</label>
+            <input
+              id="minRating"
+              type="number"
+              min="0"
+              max="5"
+              step="0.5"
+              placeholder="0 - 5"
+              formControlName="minRating">
+          </div>
+
+        </div>
+
+        <!-- Availability checkbox -->
+        <label class="availability-checkbox">
+          <input
+            type="checkbox"
+            formControlName="availableThisWeek">
+          <span>Available this week</span>
+        </label>
+
+        <!-- Buttons -->
+        <div class="filter-actions">
+          <button type="submit" class="btn-search">
+            Search Tutors
+          </button>
+
+          <button
+            type="button"
+            class="btn-clear"
+            (click)="clearFilters()">
+            Clear Filters
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- Search results -->
+    <section class="results-section">
+      <h2>Search Results</h2>
+
+      <div class="tutor-results-grid">
+        @for (tutor of tutors(); track tutor.userId) {
+          <app-tutor-card [tutor]="tutor"></app-tutor-card>
+        } @empty {
+          <div class="empty-results">
+            <h3>No Tutors Found</h3>
+            <p>
+              Try adjusting your filters to find more tutors.
+            </p>
+          </div>
+        }
+      </div>
+    </section>
+
+  </div>
+</div>

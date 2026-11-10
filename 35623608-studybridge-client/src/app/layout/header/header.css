@@ -1,0 +1,136 @@
+
+.studybridge-header {
+  background-color: #3a4d70;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header-content {
+  min-height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 12px 0;
+}
+
+/* Logo */
+
+.header-logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.studybridge-logo {
+  width: 115px;
+  height: 58px;
+  object-fit: contain;
+  background: white;
+  border-radius: 4px;
+}
+
+/* Navigation */
+
+.header-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 26px;
+}
+
+.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #e0ba70;
+}
+
+/* Active page */
+
+.active-link {
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: #e0ba70;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+
+/* User name */
+
+.header-user {
+  color: #e5eaf3;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Logout */
+
+.logout-button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 7px;
+  padding: 8px 16px;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.logout-button:hover {
+  background-color: #ffffff;
+  color: #3a4d70;
+}
+
+/* Responsive */
+
+@media (max-width: 992px) {
+  .header-content {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .header-navigation {
+    justify-content: center;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-content {
+    padding: 14px 0;
+  }
+
+  .studybridge-logo {
+    width: 95px;
+    height: 52px;
+  }
+
+  .header-navigation {
+    gap: 14px;
+  }
+
+  .nav-link,
+  .header-user {
+    font-size: 14px;
+  }
+
+  .logout-button {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+}

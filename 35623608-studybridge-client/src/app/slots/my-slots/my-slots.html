@@ -1,0 +1,184 @@
+
+<div class="slots-page">
+  <div class="slots-container">
+
+    <!-- Page header -->
+    <div class="slots-banner">
+      <h1>My Slots</h1>
+      <p>Publish and manage your tutoring availability.</p>
+    </div>
+
+    <!-- Create new slot -->
+    <section class="slots-card">
+      <h2>Publish a New Slot</h2>
+      <p class="section-description">
+        Choose when you are available to tutor.
+      </p>
+
+      <form [formGroup]="slotForm" (ngSubmit)="onCreate()">
+
+        <div class="slot-form-grid">
+
+          <div class="form-field">
+            <label for="date">Date</label>
+            <input
+              id="date"
+              type="date"
+              formControlName="date">
+          </div>
+
+          <div class="form-field">
+            <label for="startTime">Start Time</label>
+            <input
+              id="startTime"
+              type="time"
+              formControlName="startTime">
+          </div>
+
+          <div class="form-field">
+            <label for="duration">Duration (minutes)</label>
+            <input
+              id="duration"
+              type="number"
+              min="1"
+              formControlName="durationMinutes"
+              placeholder="e.g. 60">
+          </div>
+
+        </div>
+
+        @if (slotForm.invalid && slotForm.touched) {
+          <p class="field-error" role="alert">
+            Please enter a date, start time and duration in minutes.
+          </p>
+        }
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn-primary-custom"
+            [disabled]="slotForm.invalid || saving()">
+
+            @if (saving()) {
+              Creating...
+            } @else {
+              Create Slot
+            }
+          </button>
+        </div>
+      </form>
+
+      @if (createError()) {
+        <p class="form-error" role="alert">
+          {{ createError() }}
+        </p>
+
+        @if (profileRequired()) {
+          <p class="profile-link">
+            <a routerLink="/my-profile">
+              Create your tutor profile.
+            </a>
+          </p>
+        }
+      }
+    </section>
+
+    <!-- Availability list -->
+    <section class="availability-section">
+
+      <h2>Your Availability Slots</h2>
+
+      @if (deleteError()) {
+        <p class="form-error" role="alert">
+          {{ deleteError() }}
+        </p>
+      }
+
+      @if (loading()) {
+        <div class="slots-card">
+          <p>Loading slots...</p>
+        </div>
+
+      } @else if (listError()) {
+        <div class="slots-card">
+          <p class="form-error" role="alert">
+            {{ listError() }}
+          </p>
+
+          <button
+            type="button"
+            class="btn-primary-custom"
+            (click)="loadSlots()">
+            Retry
+          </button>
+        </div>
+
+      } @else {
+
+        <div class="slots-table-card">
+          <div class="table-responsive">
+            <table class="slots-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Start Time</th>
+                  <th>Duration</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                @for (slot of slots(); track slot._id) {
+                  <tr>
+                    <td>{{ slot.date | date:'dd MMM y':'UTC' }}</td>
+                    <td>{{ slot.startTime }}</td>
+                    <td>{{ slot.durationMinutes }} minutes</td>
+
+                    <td>
+                      @if (slot.isBooked) {
+                        <span class="status-badge status-booked">
+                          Booked
+                        </span>
+                      } @else {
+                        <span class="status-badge status-open">
+                          Open
+                        </span>
+                      }
+                    </td>
+
+                    <td>
+                      <button
+                        type="button"
+                        class="btn-delete"
+                        [disabled]="slot.isBooked || deleting()"
+                        (click)="requestDelete(slot)">
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="5" class="empty-state">
+                      You have not published any slots yet.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+    </section>
+
+  </div>
+</div>
+
+<!-- Existing confirmation dialog -->
+<app-confirm-dialog
+  [(open)]="showConfirm"
+  title="Delete this slot?"
+  message="Are you sure you want to delete this availability slot?"
+  confirmLabel="Delete"
+  (confirmed)="onConfirmed()">
+</app-confirm-dialog>

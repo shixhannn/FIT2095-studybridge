@@ -1,0 +1,91 @@
+
+<div class="login-page">
+  <div class="login-container">
+
+    <!-- Left: Branding panel -->
+    <section class="login-brand">
+      <div class="brand-top">
+        <img
+          src="/logo-square.png" 
+          alt="StudyBridge logo" 
+          class="login-logo"
+        />
+      </div>
+
+      <div class="brand-content">
+        <h1>Better learning together</h1>
+        <p>Connecting students through peer tutoring.</p>
+      </div>
+    </section>
+
+    <!-- Right: Login form -->
+    <section class="login-form-panel">
+      <div class="login-form-content">
+
+        <div class="form-heading">
+          <h2>Log in to StudyBridge</h2>
+          <p>Enter your details to continue your learning journey.</p>
+        </div>
+
+        @if (registered() === 'true') {
+          <p class="form-success" role="status">
+            Registration successful. Please log in.
+          </p>
+        }
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+          <div class="form-field">
+            <label for="login-email">Email address</label>
+            <input
+              id="login-email"
+              type="email"
+              formControlName="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+            />
+
+            @if (loginForm.controls.email.invalid &&
+                 loginForm.controls.email.touched) {
+              <p class="field-error">Enter a valid email address.</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="login-password">Password</label>
+            <input
+              id="login-password"
+              type="password"
+              formControlName="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+
+            @if (loginForm.controls.password.invalid &&
+                 loginForm.controls.password.touched) {
+              <p class="field-error">Password is required.</p>
+            }
+          </div>
+
+          @if (errorMessage()) {
+            <p class="form-error" role="alert">
+              {{ errorMessage() }}
+            </p>
+          }
+
+          <button class="login-button" type="submit">
+            Log in
+            <span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <p class="register-prompt">
+          New to StudyBridge?
+          <a routerLink="/register">Create an account</a>
+        </p>
+
+      </div>
+    </section>
+
+  </div>
+</div>

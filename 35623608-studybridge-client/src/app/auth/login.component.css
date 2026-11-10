@@ -1,0 +1,284 @@
+
+:host {
+  display: block;
+}
+
+.login-page {
+  --ink: #304C70;
+  --amber: #D5A65B;
+  --ivory: #FAF9F6;
+  --charcoal: #252E3B;
+
+  color: var(--charcoal);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #FAF9F6;
+}
+
+.login-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  max-width: 1300px;
+  min-height: min(680px, calc(100vh - 48px));
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 18px 60px rgba(37, 46, 59, 0.10);
+}
+
+/* Left panel */
+
+.login-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 42px;
+  color: white;
+  background: #304C70;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-logo {
+  display: block;
+  width: 400px;
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.brand-top {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 0;
+}
+
+.brand-content h1 {
+  font-family: var(--font-heading);
+}
+
+.brand-name {
+  font-size: 25px;
+  font-weight: 750;
+  letter-spacing: -1px;
+}
+
+.brand-label,
+
+.brand-content {
+  position: relative;
+  z-index: 1;
+}
+
+.brand-content h1 {
+  max-width: 400px;
+  margin: 18px 0;
+  font-family: Georgia, serif;
+  font-size: clamp(32px, 3.2vw, 47px);
+  line-height: 1.16;
+  font-weight: 500;
+}
+
+.brand-content p {
+  max-width: 340px;
+  color: #DAE3ED;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.brand-decoration {
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+}
+
+.decoration-circle {
+  width: 160px;
+  height: 160px;
+  border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 0 24px rgba(255,255,255,0.035);
+}
+
+.decoration-icon {
+  font-size: 80px;
+  color: var(--amber);
+}
+
+.brand-bottom {
+  font-size: 13px;
+  color: #DAE3ED;
+}
+
+/* Right panel */
+
+.login-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 55px;
+  background: var(--ivory);
+}
+
+.login-form-content {
+  width: 100%;
+  max-width: 370px;
+}
+
+.form-heading h2 {
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin: 12px 0;
+}
+
+.form-heading > p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #687483;
+  margin-bottom: 32px;
+}
+
+.form-field {
+  margin-bottom: 22px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 9px;
+}
+
+.form-field input {
+  display: block;
+  width: 100%;
+  height: 48px;
+  border: 1px solid #D8DDE3;
+  border-radius: 9px;
+  padding: 0 14px;
+  background: white;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-field input:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(48,76,112,0.12);
+}
+
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  margin-top: 28px;
+  border: none;
+  border-radius: 9px;
+  background: var(--ink);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.login-button:hover {
+  background: #233C5C;
+  transform: translateY(-1px);
+}
+
+.register-prompt {
+  margin-top: 26px;
+  text-align: center;
+  color: #687483;
+  font-size: 16px;
+}
+
+.register-prompt a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.register-prompt a:hover {
+  text-decoration: underline;
+}
+
+.field-error,
+.form-error {
+  color: #B42318;
+  font-size: 14px;
+  margin-top: 7px;
+}
+
+.form-success {
+  color: #216E4E;
+  background: #EAF5EE;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .login-container {
+    grid-template-columns: 1fr;
+    margin: 10px auto;
+    min-height: auto;
+  }
+
+  .login-brand {
+    min-height: 250px;
+    padding: 30px;
+  }
+
+  .brand-content h1 {
+    font-size: 30px;
+  }
+
+  .brand-decoration {
+    display: none;
+  }
+
+  .login-form-panel {
+    padding: 45px 25px;
+  }
+}
+
+/* Ensure consistent Login typography */
+.login-page {
+  font-family: var(--font-body, Arial, sans-serif);
+}
+
+.login-page p,
+.login-page label,
+.login-page input,
+.login-page button,
+.login-page a {
+  font-family: var(--font-body, Arial, sans-serif);
+}
+
+/* Login form heading: Arial */
+.form-heading h2 {
+  font-family: var(--font-body, Arial, sans-serif);
+}
+
+/* Left panel slogan: Georgia */
+.brand-content h1 {
+  font-family: var(--font-heading, Georgia, serif);
+}

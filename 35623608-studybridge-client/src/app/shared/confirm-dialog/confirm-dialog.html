@@ -1,0 +1,25 @@
+
+<!-- T5: Confirmation dialog -->
+<dialog #dialogEl (close)="open.set(false)">
+  <div class="dialog-content">
+    <h3>{{ title() }}</h3>
+
+    <p>{{ message() }}</p>
+
+    <div class="actions">
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="cancel()">
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        class="danger-button"
+        (click)="confirm()">
+        {{ confirmLabel() }}
+      </button>
+    </div>
+  </div>
+</dialog>

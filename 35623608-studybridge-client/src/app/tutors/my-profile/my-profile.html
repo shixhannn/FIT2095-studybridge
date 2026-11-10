@@ -1,0 +1,159 @@
+
+<div class="profile-page">
+
+  <div class="profile-container">
+
+    <div class="profile-banner">
+      <h1>My Tutor Profile</h1>
+      <p>Manage your tutor information and the subjects you teach.</p>
+    </div>
+
+    @if (loading()) {
+      <div class="profile-card">
+        <p>Loading profile...</p>
+      </div>
+
+    } @else if (loadFailed()) {
+      <div class="profile-card">
+        <p class="form-error" role="alert">{{ errorMessage() }}</p>
+        <button type="button" class="btn-primary-custom" (click)="loadProfile()">
+          Retry
+        </button>
+      </div>
+
+    } @else {
+
+      <div class="profile-card">
+
+        <div class="profile-card-header">
+          <h2>{{ hasProfile() ? 'Edit Your Profile' : 'Create Your Profile' }}</h2>
+
+          @if (!hasProfile()) {
+            <p>You have no profile yet. Complete this form to publish slots.</p>
+          } @else {
+            <p>Keep your tutoring information up to date.</p>
+          }
+        </div>
+
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+          <div class="form-field">
+            <label for="bio">Biography</label>
+            <textarea
+              id="bio"
+              rows="4"
+              formControlName="bio"
+              placeholder="Tell students a little about yourself and your tutoring experience.">
+            </textarea>
+
+            <p class="field-hint">Maximum 500 characters.</p>
+
+            @if (profileForm.controls.bio.invalid && profileForm.controls.bio.touched) {
+              <p class="field-error" role="alert">
+                Biography must be at most 500 characters.
+              </p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="hourlyRate">Hourly Rate (AUD)</label>
+            <div class="rate-input">
+              <span class="currency-symbol">$</span>
+              <input
+                id="hourlyRate"
+                type="number"
+                min="5"
+                max="200"
+                formControlName="hourlyRate"
+                placeholder="Enter your hourly rate">
+            </div>
+
+            <p class="field-hint">Set your hourly rate between $5 and $200.</p>
+
+            @if (profileForm.controls.hourlyRate.invalid && profileForm.controls.hourlyRate.touched) {
+              <p class="field-error" role="alert">
+                Hourly rate must be between $5 and $200.
+              </p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label id="subjects-label">Subjects You Teach</label>
+
+            <div class="subjects-dropdown">
+
+              <button
+                type="button"
+                class="subjects-dropdown-trigger"
+                aria-labelledby="subjects-label"
+                [attr.aria-expanded]="subjectsDropdownOpen()"
+                (click)="toggleSubjectsDropdown()">
+
+                <span>{{ getSelectedSubjectsLabel() }}</span>
+                <span class="dropdown-arrow">⌄</span>
+              </button>
+
+              @if (subjectsDropdownOpen()) {
+                <div class="subjects-dropdown-menu">
+                  @for (subject of subjects(); track subject._id) {
+                    <label class="subject-option">
+                      <input
+                        type="checkbox"
+                        [checked]="isSubjectSelected(subject._id)"
+                        (change)="toggleSubject(subject._id)">
+
+                      <span>{{ subject.name }}</span>
+                    </label>
+                  }
+                </div>
+              }
+
+            </div>
+
+            @if (profileForm.controls.subjects.invalid && profileForm.controls.subjects.touched) {
+              <p class="field-error" role="alert">
+                Select at least one subject.
+              </p>
+            }
+          </div>
+
+          <div class="profile-actions">
+            <button
+              type="submit"
+              class="btn-primary-custom"
+              [disabled]="profileForm.invalid || saving()">
+
+              @if (saving()) {
+                Saving...
+              } @else if (hasProfile()) {
+                Save Changes
+              } @else {
+                Create Profile
+              }
+            </button>
+
+            <a routerLink="/my-slots" class="btn-outline-custom">
+              Manage My Slots
+            </a>
+          </div>
+
+        </form>
+
+        @if (successMessage()) {
+          <p class="form-success" role="status">
+            {{ successMessage() }}
+          </p>
+        }
+
+        @if (errorMessage()) {
+          <p class="form-error" role="alert">
+            {{ errorMessage() }}
+          </p>
+        }
+
+      </div>
+    }
+
+  </div>
+
+</div>

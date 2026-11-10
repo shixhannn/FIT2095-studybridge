@@ -1,0 +1,64 @@
+:host {
+  display: block;
+  font-family: var(--font-body, Arial, sans-serif);
+}
+
+.not-found-page {
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: #faf9f6;
+}
+
+.not-found-content {
+  max-width: 480px;
+  text-align: center;
+}
+
+.not-found-content h1 {
+  margin: 0;
+  font-family: var(--font-body, Arial, sans-serif);
+  font-size: clamp(90px, 15vw, 140px);
+  font-weight: 700;
+  line-height: 1;
+  color: #3d4d70;
+}
+
+.not-found-content h2 {
+  margin: 20px 0 14px;
+  font-family: var(--font-heading, Georgia, serif);
+  font-size: 30px;
+  font-weight: 600;
+  color: #292f3b;
+}
+
+.not-found-content p {
+  margin: 0 0 30px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #68758a;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 13px 26px;
+  border-radius: 7px;
+  background: #3d4d70;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.back-button:hover {
+  background: #2d3d5d;
+}
+
+@media (max-width: 480px) {
+  .not-found-content h2 {
+    font-size: 26px;
+  }
+}

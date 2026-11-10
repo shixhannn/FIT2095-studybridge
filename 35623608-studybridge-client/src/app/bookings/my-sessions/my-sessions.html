@@ -1,0 +1,140 @@
+
+<div class="sessions-page">
+  <div class="sessions-container">
+
+    <!-- Page header -->
+    <div class="sessions-banner">
+      <h1>My Sessions</h1>
+      <p>Manage your tutoring sessions.</p>
+    </div>
+
+    <!-- Error message -->
+    @if (errorMessage()) {
+      <div class="form-error" role="alert">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <!-- Sessions -->
+    @if (loading()) {
+      <div class="sessions-message">
+        <p>Loading sessions...</p>
+      </div>
+    } @else {
+
+      <div class="sessions-grid">
+        @for (booking of bookings(); track booking._id) {
+
+          <article class="session-card">
+
+            <div class="session-card-header">
+              <h2>Tutoring Session</h2>
+
+              <span
+                class="session-status"
+                [class.status-requested]="booking.status === 'requested'"
+                [class.status-confirmed]="booking.status === 'confirmed'"
+                [class.status-completed]="booking.status === 'completed'"
+                [class.status-cancelled]="booking.status === 'cancelled'">
+                {{ booking.status }}
+              </span>
+            </div>
+
+            <div class="session-details">
+
+              <div class="detail-row">
+                <span class="detail-label">Learner ID</span>
+                <span class="detail-value text-break">
+                  {{ booking.learnerId }}
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">Subject ID</span>
+                <span class="detail-value text-break">
+                  {{ booking.subjectId }}
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">Hourly Rate</span>
+                <span class="detail-value">
+                  ${{ booking.agreedRate }}
+                </span>
+              </div>
+
+              <div class="detail-row">
+                <span class="detail-label">Created On</span>
+                <span class="detail-value">
+                  {{ booking.createdDate | date:'mediumDate' }}
+                </span>
+              </div>
+
+            </div>
+
+            <!-- Booking actions -->
+            @if (canConfirm(booking) || canComplete(booking) || canCancel(booking)) {
+              <div class="session-actions">
+
+                @if (canConfirm(booking)) {
+                  <button
+                    type="button"
+                    class="btn-session btn-confirm"
+                    [disabled]="currentId() !== null"
+                    (click)="confirmBooking(booking)">
+                    Confirm
+                  </button>
+                }
+
+                @if (canComplete(booking)) {
+                  <button
+                    type="button"
+                    class="btn-session btn-complete"
+                    [disabled]="currentId() !== null"
+                    (click)="completeBooking(booking)">
+                    Complete
+                  </button>
+                }
+
+                @if (canCancel(booking)) {
+                  <button
+                    type="button"
+                    class="btn-session btn-cancel"
+                    [disabled]="currentId() !== null"
+                    (click)="cancelBooking(booking)">
+                    Cancel
+                  </button>
+                }
+
+              </div>
+            }
+
+            @if (currentId() === booking._id) {
+              <p class="updating-message" role="status">
+                Updating...
+              </p>
+            }
+
+            <!-- HD5: Completed session recap -->
+            @if (booking.status === 'completed') {
+              <div class="session-recap-section">
+                <app-session-recap [bookingId]="booking._id" />
+              </div>
+            }
+
+          </article>
+
+        } @empty {
+          <div class="sessions-message">
+            <h2>No Sessions Yet</h2>
+            <p>
+              Your tutoring sessions will appear here once
+              learners make bookings.
+            </p>
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+</div>

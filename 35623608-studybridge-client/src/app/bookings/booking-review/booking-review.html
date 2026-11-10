@@ -1,0 +1,47 @@
+<!-- T8 -->
+@if (submittedReview(); as review) {
+  <div class="alert alert-success" role="status">
+    <strong>Your review:</strong> {{ review.rating }} / 5
+    <p class="mb-0">{{ review.comment || 'No comment' }}</p>
+  </div>
+
+} @else if (hasReviewedMessage()) {
+  <!-- T8: (409) show error message -->
+  <div class="alert alert-danger" role="alert">
+    {{ hasReviewedMessage() }}
+  </div>
+
+} @else {
+  <!-- T8: Review form for completed booking -->
+  <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()"
+        class="border rounded p-3 mt-3">
+    <h3 class="h6">Leave a Review</h3>
+    <div class="mb-3">
+      <label [for]="'rating-' + bookingId()">Rating</label>
+      <select [id]="'rating-' + bookingId()" formControlName="rating">
+        <option value="">Select rating</option>
+        @for (rating of ratings; track rating) {
+          <option [value]="rating">{{ rating }}</option>`
+        }
+      </select>
+
+      @if (reviewForm.controls.rating.invalid && reviewForm.controls.rating.touched) {
+        <p class="text-danger">Please choose a rating from 1 to 5.</p>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="comment">Comment (optional)</label>
+      <textarea id="comment" class="form-control" formControlName="comment" 
+        rows="3" maxlength="500"></textarea>
+    </div>
+
+    @if (errorMessage()) {
+      <p class="text-danger" role="alert">{{ errorMessage() }}</p>
+    }
+
+    <button type="submit" class="btn btn-primary" [disabled]="sending()">
+      {{ sending() ? 'Submitting...' : 'Submit Review' }}
+    </button>
+  </form>
+}

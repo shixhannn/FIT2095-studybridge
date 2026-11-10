@@ -1,0 +1,153 @@
+
+<div class="dashboard-page">
+
+  @if (currentUser(); as user) {
+
+    <div class="dashboard-container">
+
+      <!-- Welcome section -->
+      <header class="dashboard-welcome">
+        <div>
+          <h1>Dashboard</h1>
+          <p class="welcome-message">{{ user.greeting }}</p>
+        </div>
+
+        <div class="welcome-decoration" aria-hidden="true">✦</div>
+      </header>
+
+      <!-- Learner Dashboard -->
+      @if (user.role === 'learner') {
+
+        <div class="section-heading">
+          <div>
+            <h2>My Bookings</h2>
+          </div>
+          <p>Keep track of your learning journey.</p>
+        </div>
+
+        <div class="stats-grid">
+
+          <article class="stat-card">
+            <span class="stat-label">Requested</span>
+            <strong class="stat-value">{{ requestedCount() }}</strong>
+            <span class="stat-description">Awaiting confirmation</span>
+            <span class="stat-accent gold"></span>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Confirmed</span>
+            <strong class="stat-value">{{ confirmedCount() }}</strong>
+            <span class="stat-description">Ready to learn</span>
+            <span class="stat-accent blue"></span>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Completed</span>
+            <strong class="stat-value">{{ completedCount() }}</strong>
+            <span class="stat-description">Learning milestones</span>
+            <span class="stat-accent green"></span>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Cancelled</span>
+            <strong class="stat-value">{{ cancelledCount() }}</strong>
+            <span class="stat-description">Cancelled bookings</span>
+            <span class="stat-accent grey"></span>
+          </article>
+
+        </div>
+      }
+
+      <!-- Tutor Dashboard -->
+      @else if (user.role === 'tutor') {
+
+        <div class="section-heading">
+          <div>
+            <h2>My Bookings</h2>
+          </div>
+          <p>Manage your tutoring activity at a glance.</p>
+        </div>
+
+        <div class="stats-grid">
+
+          <article class="stat-card">
+            <span class="stat-label">Requested</span>
+            <strong class="stat-value">{{ requestedCount() }}</strong>
+            <span class="stat-description">Awaiting your response</span>
+            <span class="stat-accent gold"></span>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Confirmed</span>
+            <strong class="stat-value">{{ confirmedCount() }}</strong>
+            <span class="stat-description">Confirmed bookings</span>
+            <span class="stat-accent blue"></span>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Completed</span>
+            <strong class="stat-value">{{ completedCount() }}</strong>
+            <span class="stat-description">Sessions completed</span>
+            <span class="stat-accent green"></span>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Cancelled</span>
+            <strong class="stat-value">{{ cancelledCount() }}</strong>
+            <span class="stat-description">Cancelled bookings</span>
+            <span class="stat-accent grey"></span>
+          </article>
+
+        </div>
+
+        <div class="section-heading slots-heading">
+          <div>
+            <h2>My Open Slots</h2>
+          </div>
+        </div>
+
+        <div class="slots-card">
+          <div>
+            <span class="stat-label">Available tutoring slots</span>
+            <strong class="stat-value">{{ openSlotCount() }}</strong>
+            <p class="stat-description">
+              Your published slots that are still open for booking.
+            </p>
+          </div>
+          <div class="slots-decoration" aria-hidden="true">✦</div>
+        </div>
+
+      }
+
+      <!-- Admin Dashboard -->
+      @else if (user.role === 'admin') {
+
+        <div class="section-heading">
+          <div>
+            <h2>Subject Catalogue</h2>
+          </div>
+          <p>Overview of available subjects.</p>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span class="stat-label">Total Subjects</span>
+            <strong class="stat-value">{{ subjectCount() }}</strong>
+            <span class="stat-description">Subjects in the catalogue</span>
+            <span class="stat-accent blue"></span>
+          </article>
+        </div>
+
+      }
+
+    </div>
+
+  } @else {
+
+    <div class="dashboard-loading">
+      <p>Loading dashboard...</p>
+    </div>
+
+  }
+
+</div>

@@ -1,0 +1,61 @@
+/* Review section typography */
+:host {
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  color: #292f3b;
+}
+
+h3, h4, h5 {
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* Form labels */
+label {
+  display: block;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Dropdown and textarea */
+select,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  border: 1px solid #d8dee8;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Submit button */
+button[type="submit"] {
+  padding: 10px 18px;
+  background: #3d4d70;
+  color: white;
+  border: 1px solid #3d4d70;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background: #303e5d;
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
