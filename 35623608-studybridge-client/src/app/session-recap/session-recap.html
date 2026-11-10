@@ -1,39 +1,47 @@
-import { Component, inject, input, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { finalize } from 'rxjs';
-import { environment } from '../../environments/environment';
 
-@Component({
-  selector: 'app-session-recap',
-  imports: [FormsModule],
-  templateUrl: './session-recap.html',
-  styleUrl: './session-recap.css'
-})
-export class SessionRecap {
-  private http = inject(HttpClient);
+<section class="container py-4">
+  <h2 class="mb-4">Session Recap</h2>
 
-  bookingId = input.required<string>();
-  notes = signal('');
-  recap = signal<string | null>(null);
-  loading = signal(false);
-  error = signal<string | null>(null);
+  <div class="mb-3">
+    <label for="notes" class="form-label">Session Notes</label>
+    <textarea
+      id="notes"
+      class="form-control"
+      rows="5"
+      placeholder="Write your session notes here..."
+      [ngModel]="notes()"
+      (ngModelChange)="notes.set($event)"
+    ></textarea>
+  </div>
 
-  generate(): void {
-    // HD5: Show loading state and clear previous 
-    this.loading.set(true);
-    this.error.set(null);
-    this.recap.set(null);
-    // HD5: Send notes to backend 
-    this.http.post<{ recap: string }>(
-      `${environment.apiBaseUrl}/bookings/${this.bookingId()}/recap`, { 
-        notes: this.notes(), 
-    })
-    .pipe(finalize(() => this.loading.set(false)))
-    .subscribe({
-      // HD5: Display returned recap text
-      next: (res) => this.recap.set(res.recap),
-      error: (err) => this.error.set(err.error?.error ?? "Something went wrong"),
-    });
+  <!-- Generate Recap Button -->
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="generate()"
+    [disabled]="loading() || !notes().trim()"
+  >
+    @if (loading()) {
+      Generating Recap...
+    } @else {
+      Generate Recap
+    }
+  </button>
+
+  <!-- Error Message -->
+  @if (error()) {
+    <div class="alert alert-danger mt-3">
+      {{ error() }}
+    </div>
   }
-}
+
+  <!-- Generated Recap -->
+  @if (recap()) {
+    <div class="card mt-4">
+      <div class="card-body">
+        <h3 class="h5 card-title">Generated Recap</h3>
+        <p class="card-text" style="white-space: pre-wrap;">{{ recap() }}</p>
+      </div>
+    </div>
+  }
+</section>
