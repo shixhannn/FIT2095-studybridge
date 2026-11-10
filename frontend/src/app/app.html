@@ -1,0 +1,13 @@
+<div class="d-flex flex-column min-vh-100">
+  @if (!isAuthPage) {
+    <app-header />
+  }
+
+  <main class="flex-grow-1" style="background-color: #FAF9F6;">
+    <router-outlet></router-outlet>
+  </main>
+
+  @if (!isAuthPage) {
+    <app-footer />
+  }
+</div>

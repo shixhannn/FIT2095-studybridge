@@ -1,93 +1,191 @@
-# assignment-3
+# StudyBridge - Peer Tutoring Platform
 
+StudyBridge is a full-stack web application that helps students find peer tutors, book tutoring sessions and manage their learning activities in one place.
 
+The platform supports learners, tutors and administrators, with features including tutor discovery, availability management, real-time booking updates and AI-generated session recaps using Google Gemini.
 
-## Getting started
+## Features
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- **User Authentication:** Registration and login with role-based access for learners, tutors and administrators.
+- **Tutor Search:** Search for tutors by subject and view their profiles.
+- **Availability Management:** Tutors can create and manage their available time slots.
+- **Session Booking:** Learners can book tutoring sessions and manage their bookings.
+- **Reviews and Ratings:** Learners can leave reviews and ratings for tutors.
+- **Real-Time Updates:** Socket.IO provides real-time updates for booking-related activities.
+- **AI Session Recaps:** Google Gemini generates session summaries from tutoring notes.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Tech Stack
 
-## Add your files
+| Component | Technologies |
+|---|---|
+| Frontend | Angular 22, TypeScript, HTML, CSS, Bootstrap 5 |
+| Backend | Node.js, Express.js |
+| Database | MongoDB, Mongoose |
+| Authentication | JWT, bcrypt |
+| Real-Time Updates | Socket.IO |
+| AI Integration | Google Gemini API |
+| Deployment | Google Cloud Compute Engine |
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+## Screenshots and Demo
 
+### Demo Video
+
+A short walkthrough of the application's main features will be added here.
+
+### Screenshots
+
+Screenshots of the following pages will be added:
+
+- Login and registration
+- Learner dashboard and tutor search
+- Tutor profiles and availability
+- Session booking and management
+- AI-generated session recap
+
+## Project Structure
+
+```text
+FIT2095-studybridge/
+├── 35623608-studybridge-api/       # Backend
+├── 35623608-studybridge-client/    # Frontend
+└── README.md                       # Project documentation
 ```
-cd existing_repo
-git remote add origin https://git.infotech.monash.edu/fit2095/fit2095-s2-2026/slio0010/assignment-3.git
-git branch -M main
-git push -uf origin main
+
+## Getting Started
+
+### Prerequisites
+
+Install the following before running the application:
+
+- [Node.js](https://nodejs.org/) (v24 or compatible), including npm
+- [MongoDB Community Server](https://www.mongodb.com/try/download/community)
+- [Git](https://git-scm.com/)
+- Angular CLI v22
+- [Google Gemini API key](https://aistudio.google.com/apikey) for AI session recaps
+
+To install Angular CLI:
+
+```bash
+npm install -g @angular/cli@22
 ```
 
-## Integrate with your tools
+### 1. Clone the Repository
 
-* [Set up project integrations](https://git.infotech.monash.edu/fit2095/fit2095-s2-2026/slio0010/assignment-3/-/settings/integrations)
+```bash
+git clone https://github.com/shixhannn/FIT2095-studybridge.git
+cd FIT2095-studybridge
+```
 
-## Collaborate with your team
+### 2. Start the Backend
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+The backend runs at `http://localhost:3000`.
 
-## Test and Deploy
+**a) Install dependencies**
 
-Use the built-in continuous integration in GitLab.
+```bash
+cd backend
+npm install
+```
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+**b) Configure environment variables**
 
-***
+Create a `.env` file in the backend directory using `.env.example` as a reference.
 
-# Editing this README
+Example:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```env
+PORT=3000
+MONGODB_URI=mongodb://127.0.0.1:27017/studybridge_a2
+DB_NAME=studybridge_a2
+JWT_SECRET=replace_with_a_secure_random_secret
+GEMINI_API_KEY=your_gemini_api_key
+SEED_ADMIN_EMAIL=admin@example.com
+SEED_ADMIN_PASSWORD=your_admin_password
+```
 
-## Suggestions for a good README
+Use your own credentials and keep the `.env` file private.
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+**c) Start MongoDB**
 
-## Name
-Choose a self-explaining name for your project.
+Make sure the local MongoDB service is running.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+**d) Seed the database**
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Run the following command to create the initial subjects and administrator account:
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```bash
+node --env-file=.env seed.js
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+This step is only required during initial setup.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+**e) Run the backend**
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+```bash
+node --watch --env-file=.env server.js
+```
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Keep the terminal open while using the application.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+### 3. Start the Frontend
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Open another terminal from the repository root.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+**a) Install dependencies**
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+```bash
+cd frontend
+npm install
+```
 
-## License
-For open source projects, say how it is licensed.
+**b) Run Angular**
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+```bash
+ng serve
+```
+
+**c) Open StudyBridge**
+
+Visit `http://localhost:4200` in your browser.
+
+The frontend connects to the backend at `http://localhost:3000/api/35623608`. Both servers need to be running.
+
+### 4. Using StudyBridge
+
+Once the application is running, you can register an account and explore the features available to your role.
+
+Learners can search for tutors, view availability, book sessions and leave reviews. Tutors can manage their profiles, availability and tutoring sessions. The application also supports AI-generated session recaps.
+
+## Application Architecture
+
+StudyBridge uses Angular for the frontend and Express.js for the backend. The frontend communicates with the backend through REST APIs.
+
+```text
+                 Angular Frontend
+                        |
+                     REST API
+                        |
+                        v
+                Node.js / Express
+                        |
+          +-------------+-------------+
+          |             |             |
+          v             v             v
+       MongoDB       Socket.IO     Gemini API
+     Data Storage    Real-Time     AI Session
+                      Updates        Recaps
+```
+
+MongoDB stores user accounts, tutor profiles, subjects, availability slots, bookings and reviews. Socket.IO handles real-time events, while the Gemini API is used to generate session recaps from tutoring notes.
+
+Authentication is handled on the backend using JWT and bcrypt.
+
+## Deployment
+
+StudyBridge was deployed and tested on a Google Cloud Compute Engine virtual machine running Ubuntu.
+
+The deployment involved setting up Node.js and MongoDB, building the Angular application for production, configuring network access and using system services to keep the application running.
+
+The Angular frontend was served through Express, allowing the application and its APIs to be accessed through the same server.
+
+The cloud instance is not kept online continuously, but the application can be run locally using the instructions above.

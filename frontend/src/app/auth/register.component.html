@@ -1,0 +1,115 @@
+
+<div class="auth-page">
+  <div class="auth-container">
+
+    <!-- LEFT PANEL -->
+    <section class="auth-brand">
+      <img
+        src="/logo-square.png"
+        alt="StudyBridge logo"
+        class="auth-logo"
+      />
+
+      <div class="brand-message">
+        <h1>Better learning together.</h1>
+        <p>Connecting students through peer tutoring.</p>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL -->
+    <section class="auth-form-panel">
+      <div class="auth-form-content">
+        <h2>Create an account</h2>
+        <p class="auth-subtitle">
+          Start your learning journey with us.
+        </p>
+
+        <form
+          [formGroup]="registerForm"
+          (ngSubmit)="onSubmit()"
+          class="register-form"
+        >
+
+          <div class="form-field">
+            <label for="fullName">Full name</label>
+            <input
+              id="fullName"
+              type="text"
+              formControlName="fullName"
+              placeholder="Enter your full name"
+            />
+
+            @if (registerForm.controls.fullName.invalid && registerForm.controls.fullName.touched) {
+              <p class="field-error">Full name is required.</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="you@example.com"
+            />
+
+            @if (registerForm.controls.email.invalid && registerForm.controls.email.touched) {
+              <p class="field-error">Enter a valid email address.</p>
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Create a password"
+            />
+
+            @if (registerForm.controls.password.invalid && registerForm.controls.password.touched) {
+              @if (registerForm.controls.password.hasError('required')) {
+                <p class="field-error">Password is required.</p>
+              } @else {
+                <p class="field-error">
+                  Password needs 8+ characters, an uppercase letter,
+                  a lowercase letter, a number and a symbol
+                </p>
+              }
+            }
+          </div>
+
+          <div class="form-field">
+            <label for="role">I want to join as a</label>
+            <select id="role" formControlName="role">
+              <option value="">Select a role</option>
+              <option value="learner">Learner</option>
+              <option value="tutor">Tutor</option>
+            </select>
+
+            @if (registerForm.controls.role.invalid && registerForm.controls.role.touched) {
+              <p class="field-error">Please select a role.</p>
+            }
+          </div>
+
+          <button type="submit" class="submit-btn">
+            Create account <span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        @if (errorMessage()) {
+          <p class="form-error" role="alert">
+            {{ errorMessage() }}
+          </p>
+        }
+
+        <p class="auth-switch">
+          Already registered?
+          <a routerLink="/login">Log in</a>
+        </p>
+
+      </div>
+    </section>
+
+  </div>
+</div>
