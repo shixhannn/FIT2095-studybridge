@@ -13,6 +13,8 @@ import { requireRole } from "./middleware/requireRole.js";
 import http from "http";
 import { Server } from "socket.io";
 import { GoogleGenAI } from "@google/genai";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const app = express();
 app.use(express.json());
@@ -736,6 +738,24 @@ app.post("/api/35623608/bookings/:bookingId/recap", verifyToken, requireRole("tu
 }
 );
 
+// Serve the production Angular frontend
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const angularDist = path.join(
+  __dirname,
+  "../35623608-studybridge-client/dist/35623608-studybridge/browser"
+);
+
+app.use(express.static(angularDist));
+
+// Angular SPA fallback for frontend routes
+app.get("/{*path}", (req, res, next) => {
+  if (req.path.startsWith("/api/")) {
+    return next();
+  }
+
+  res.sendFile(path.join(angularDist, "index.html"));
+});
 
 app.use((err, req, res, next) => {
   if (err.name === "CastError") {
